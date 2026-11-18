@@ -22,7 +22,7 @@ import { calculateConsumption } from '../lib/calculations.js';
 import { formatMoney, formatNumber } from '../lib/format.js';
 import { hasErrors, validateNumber } from '../lib/validation.js';
 
-const DEFAULTS = { km: '250', liters: '18', price: '2.45' };
+const DEFAULTS = { km: '250', liters: '18', price: '1.25' };
 
 export default function ConsumptionModule({ profiles, onSaveHistory, onSaveProfile, notify }) {
   const [values, setValues] = useState(DEFAULTS);
@@ -141,8 +141,8 @@ export default function ConsumptionModule({ profiles, onSaveHistory, onSaveProfi
                 label="Цена за 1 литър"
                 value={values.price}
                 onChange={(value) => update('price', value)}
-                unit="лв."
-                placeholder="2.45"
+                unit="€"
+                placeholder="1.25"
                 error={errors.price}
               />
             </div>

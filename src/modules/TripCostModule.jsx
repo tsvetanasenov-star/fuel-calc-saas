@@ -23,7 +23,7 @@ import { calculateTrip } from '../lib/calculations.js';
 import { formatMoney, formatNumber } from '../lib/format.js';
 import { hasErrors, validateNumber } from '../lib/validation.js';
 
-const DEFAULTS = { distance: '180', consumption: '7.5', price: '2.45', passengers: '2' };
+const DEFAULTS = { distance: '180', consumption: '7.5', price: '1.25', passengers: '2' };
 
 export default function TripCostModule({ profiles, onSaveHistory, notify }) {
   const [values, setValues] = useState(DEFAULTS);
@@ -154,8 +154,8 @@ export default function TripCostModule({ profiles, onSaveHistory, notify }) {
                 label="Цена за 1 литър"
                 value={values.price}
                 onChange={(value) => update('price', value)}
-                unit="лв."
-                placeholder="2.45"
+                unit="€"
+                placeholder="1.25"
                 error={errors.price}
               />
               <NumberField

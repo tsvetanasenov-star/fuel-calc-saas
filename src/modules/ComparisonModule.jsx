@@ -16,8 +16,8 @@ import { hasErrors, validateNumber } from '../lib/validation.js';
 
 const DEFAULTS = {
   annualKm: '15000',
-  a: { name: 'Бензин А95', consumption: '8.2', price: '2.55' },
-  b: { name: 'Дизел', consumption: '6.1', price: '2.30' },
+  a: { name: 'Бензин А95', consumption: '8.2', price: '1.30' },
+  b: { name: 'Дизел', consumption: '6.1', price: '1.18' },
 };
 
 export default function ComparisonModule({ profiles, onSaveHistory, notify }) {
@@ -146,8 +146,8 @@ export default function ComparisonModule({ profiles, onSaveHistory, notify }) {
               label="Цена/л"
               value={data.price}
               onChange={(value) => updateSide(side, 'price', value)}
-              unit="лв."
-              placeholder="2.45"
+              unit="€"
+              placeholder="1.30"
               error={errors[errorKeys.price]}
             />
           </div>

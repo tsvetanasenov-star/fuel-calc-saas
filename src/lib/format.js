@@ -18,7 +18,18 @@ export const formatNumber = (value, digits = 2) => {
       }).format(value);
 };
 
-export const formatMoney = (value) => `${formatNumber(value)} лв.`;
+export const formatMoney = (value) => `${formatNumber(value)} €`;
+
+export const BGN_PER_EUR = 1.95583;
+
+/** Преобразува стари текстове с „лв.“ към евро (използва се при миграция на историята). */
+export const convertBgnTextToEur = (text) => {
+  if (!text) return text;
+  return text.replace(/(\d+(?:[ \u00a0]\d{3})*(?:[.,]\d+)?)\s*лв\./g, (match, raw) => {
+    const value = Number(raw.replace(/[ \u00a0]/g, '').replace(',', '.'));
+    return Number.isFinite(value) ? `${formatNumber(value / BGN_PER_EUR)} €` : match;
+  });
+};
 export const formatCompact = (value) => `${compactFormatter.format(value)}`;
 export const formatLiters = (value) => `${formatNumber(value)} л`;
 

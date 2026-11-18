@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Car, ClipboardList, Gauge, MapPin, Route, Scale } from 'lucide-react';
 import DashboardLayout from './components/DashboardLayout.jsx';
 import { createId } from './lib/id.js';
+import { convertBgnTextToEur } from './lib/format.js';
 import { useLocalStorage } from './hooks/useLocalStorage.js';
 import ConsumptionModule from './modules/ConsumptionModule.jsx';
 import TripCostModule from './modules/TripCostModule.jsx';
@@ -54,6 +55,22 @@ export default function App() {
 
   useEffect(() => () => window.clearTimeout(toastTimer.current), []);
 
+  useEffect(() => {
+    setHistory((current) => {
+      if (!current.some((item) => item.currency !== 'EUR')) return current;
+      return current.map((item) =>
+        item.currency === 'EUR'
+          ? item
+          : {
+              ...item,
+              currency: 'EUR',
+              detail: convertBgnTextToEur(item.detail),
+              text: convertBgnTextToEur(item.text),
+            },
+      );
+    });
+  }, [setHistory]);
+
   const notify = useCallback((message, isError = false) => {
     setToast({ message, isError });
     window.clearTimeout(toastTimer.current);
@@ -63,7 +80,7 @@ export default function App() {
   const addHistory = useCallback(
     (entry) => {
       setHistory((current) => [
-        { id: createId(), createdAt: new Date().toISOString(), ...entry },
+        { id: createId(), createdAt: new Date().toISOString(), currency: 'EUR', ...entry },
         ...current,
       ].slice(0, 100));
     },
